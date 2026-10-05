@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teknologi Informasi & Sistem Komputer — Amaliyah Rahma Alfitri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ RESET & VARIABLES ============ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --white:#ffffff;
+  --soft:#f6f9fc;
+  --soft-2:#eef4fb;
+  --ink:#0a1628;
+  --ink-2:#1e293b;
+  --muted:#64748b;
+  --muted-2:#94a3b8;
+  --line:#e2e8f0;
+  --line-2:#cbd5e1;
+  --cyan:#0891b2;
+  --cyan-2:#06b6d4;
+  --violet:#7c3aed;
+  --violet-2:#a78bfa;
+  --pink:#ec4899;
+  --emerald:#10b981;
+  --amber:#f59e0b;
+  --radius:20px;
+  --shadow-sm:0 1px 2px rgba(15,23,42,.05);
+  --shadow:0 10px 30px -12px rgba(15,23,42,.15);
+  --shadow-lg:0 30px 60px -25px rgba(15,23,42,.25);
+}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:var(--white);color:var(--ink);
+  line-height:1.7;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:rgba(124,58,237,.2);color:var(--ink)}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:#f1f5f9}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--cyan),var(--violet));border-radius:10px}
+
+/* ============ BACKGROUND FX (WHITE THEME) ============ */
+.bg-fx{position:fixed;inset:0;z-index:-3;overflow:hidden;pointer-events:none;background:var(--white)}
+.orb{position:absolute;border-radius:50%;filter:blur(110px);opacity:.28;animation:float 22s ease-in-out infinite}
+.orb.o1{width:600px;height:600px;background:radial-gradient(circle,#67e8f9,transparent 70%);top:-200px;left:-180px}
+.orb.o2{width:520px;height:520px;background:radial-gradient(circle,#c4b5fd,transparent 70%);top:20%;right:-200px;animation-delay:-7s}
+.orb.o3{width:480px;height:480px;background:radial-gradient(circle,#fbcfe8,transparent 70%);bottom:-180px;left:25%;animation-delay:-14s}
+.orb.o4{width:420px;height:420px;background:radial-gradient(circle,#a7f3d0,transparent 70%);top:60%;left:-140px;animation-delay:-4s}
+@keyframes float{
+  0%,100%{transform:translate(0,0) scale(1)}
+  33%{transform:translate(45px,-55px) scale(1.08)}
+  66%{transform:translate(-40px,40px) scale(.94)}
+}
+.grid-fx{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(15,23,42,.045) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(15,23,42,.045) 1px,transparent 1px);
+  background-size:68px 68px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 65% at 50% 0%,#000 5%,transparent 78%);
+  mask-image:radial-gradient(ellipse 90% 65% at 50% 0%,#000 5%,transparent 78%);
+}
+.spotlight{
+  position:fixed;width:760px;height:760px;border-radius:50%;pointer-events:none;z-index:-1;
+  background:radial-gradient(circle,rgba(8,145,178,.09),transparent 62%);
+  transform:translate(-50%,-50%);transition:opacity .4s;opacity:0;
+}
+
+/* ============ NAVBAR ============ */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:1280px;margin:0 auto;padding:14px 24px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.brand{display:flex;align-items:center;gap:12px;font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:.3px;color:var(--ink)}
+.brand .logo{
+  width:40px;height:40px;border-radius:12px;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  display:grid;place-items:center;font-size:17px;color:#fff;font-weight:800;
+  box-shadow:0 8px 20px -6px rgba(8,145,178,.6);
+}
+.brand .txt{line-height:1.15}
+.brand .txt span{display:block;font-size:10.5px;font-weight:500;letter-spacing:2.2px;color:var(--muted);font-family:'Inter',sans-serif;text-transform:uppercase;margin-top:1px}
+.nav-links{display:flex;gap:3px;align-items:center}
+.nav-links a{
+  color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;
+  padding:9px 14px;border-radius:10px;transition:.25s;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--ink);background:var(--soft)}
+.nav-links a.active{color:#fff;background:linear-gradient(135deg,var(--cyan),var(--violet))}
+.burger{display:none;background:none;border:1px solid var(--line-2);color:var(--ink);
+  width:42px;height:38px;border-radius:11px;font-size:18px;cursor:pointer}
+.progress{height:3px;background:transparent;position:relative;overflow:hidden}
+.progress span{display:block;height:100%;width:0;
+  background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));
+  box-shadow:0 0 12px rgba(124,58,237,.5);transition:width .1s linear}
+
+/* ============ LAYOUT ============ */
+.container{max-width:1280px;margin:0 auto;padding:0 24px}
+section{padding:100px 0;position:relative}
+.sec-head{max-width:880px;margin-bottom:56px}
+.kicker{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:11px;font-weight:700;letter-spacing:2.6px;text-transform:uppercase;
+  color:var(--cyan);background:rgba(8,145,178,.08);
+  border:1px solid rgba(8,145,178,.24);
+  padding:8px 16px;border-radius:100px;margin-bottom:22px;
+}
+.kicker::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);
+  box-shadow:0 0 10px var(--cyan);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+h2.sec-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(30px,4.4vw,50px);line-height:1.12;font-weight:700;letter-spacing:-1px;
+  color:var(--ink);
+}
+h2.sec-title .grad{
+  background:linear-gradient(120deg,var(--cyan),var(--violet) 55%,var(--pink));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.sec-desc{color:var(--muted);margin-top:18px;font-size:16px;max-width:760px}
+
+/* ============ HERO ============ */
+.hero{min-height:100vh;display:flex;align-items:center;padding:150px 0 100px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:60px;align-items:center;width:100%}
+.owner-badge{
+  display:inline-flex;align-items:center;gap:12px;
+  background:linear-gradient(135deg,rgba(8,145,178,.08),rgba(124,58,237,.08));
+  border:1px solid rgba(8,145,178,.2);
+  padding:9px 18px 9px 9px;border-radius:100px;margin-bottom:26px;
+  font-size:13px;font-weight:600;color:var(--ink-2);
+}
+.owner-badge .avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  display:grid;place-items:center;color:#fff;font-family:'Space Grotesk';font-weight:700;font-size:13px;
+  box-shadow:0 4px 12px -3px rgba(8,145,178,.55);
+}
+.owner-badge .meta small{display:block;font-size:10.5px;color:var(--muted);letter-spacing:1.5px;font-weight:600;text-transform:uppercase}
+.hero-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(42px,6.5vw,84px);line-height:1;font-weight:700;letter-spacing:-2.5px;
+  margin:0 0 24px;color:var(--ink);
+}
+.hero-title .grad{
+  background:linear-gradient(110deg,var(--cyan) 0%,var(--violet) 45%,var(--pink) 100%);
+  background-size:220% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shine 7s linear infinite;
+}
+@keyframes shine{to{background-position:220% center}}
+.hero-sub{color:var(--muted);font-size:clamp(15px,1.6vw,18px);max-width:580px;margin-bottom:36px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 32px;border-radius:100px;text-decoration:none;font-weight:600;font-size:14.5px;
+  background:linear-gradient(120deg,var(--cyan),var(--violet));color:#fff;
+  box-shadow:0 14px 30px -12px rgba(8,145,178,.6);transition:.3s;border:none;cursor:pointer;
+  font-family:inherit;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 20px 40px -14px rgba(124,58,237,.55)}
+.btn.ghost{background:var(--white);color:var(--ink);border:1px solid var(--line-2);box-shadow:var(--shadow-sm)}
+.btn.ghost:hover{border-color:var(--cyan);color:var(--cyan);box-shadow:0 12px 30px -12px rgba(8,145,178,.4)}
+
+/* Hero visual */
+.hero-visual{
+  position:relative;display:grid;place-items:center;
+  aspect-ratio:1/1;
+}
+.hero-visual .ring{
+  position:absolute;border-radius:50%;border:1.5px dashed rgba(8,145,178,.25);
+  animation:spin 40s linear infinite;
+}
+.hero-visual .ring.r1{width:100%;height:100%}
+.hero-visual .ring.r2{width:78%;height:78%;animation-duration:30s;animation-direction:reverse;border-color:rgba(124,58,237,.25)}
+.hero-visual .ring.r3{width:56%;height:56%;animation-duration:22s;border-color:rgba(236,72,153,.25)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-visual .core{
+  width:52%;height:52%;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#fff,rgba(255,255,255,.5));
+  border:1px solid var(--line);
+  box-shadow:0 30px 60px -30px rgba(15,23,42,.25),inset 0 0 60px rgba(8,145,178,.08);
+  display:grid;place-items:center;position:relative;overflow:hidden;
+}
+.hero-visual .core::before{
+  content:'';position:absolute;inset:-50%;
+  background:conic-gradient(from 0deg,transparent,rgba(8,145,178,.22),transparent 40%);
+  animation:spin 8s linear infinite;
+}
+.hero-visual .chip{
+  position:absolute;padding:9px 15px;border-radius:100px;
+  background:#fff;border:1px solid var(--line);
+  font-size:11.5px;font-weight:700;color:var(--ink-2);
+  box-shadow:0 12px 26px -12px rgba(15,23,42,.22);
+  display:flex;align-items:center;gap:7px;
+}
+.hero-visual .chip i{width:7px;height:7px;border-radius:50%}
+.chip.c1{top:6%;left:4%;animation:bob 4s ease-in-out infinite}
+.chip.c2{top:16%;right:0%;animation:bob 4s ease-in-out infinite .6s}
+.chip.c3{bottom:22%;left:-2%;animation:bob 4s ease-in-out infinite 1.2s}
+.chip.c4{bottom:8%;right:8%;animation:bob 4s ease-in-out infinite 1.8s}
+.chip.c5{top:50%;right:-4%;animation:bob 4s ease-in-out infinite 2.4s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.chip.c1 i{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.chip.c2 i{background:var(--violet);box-shadow:0 0 8px var(--violet)}
+.chip.c3 i{background:var(--pink);box-shadow:0 0 8px var(--pink)}
+.chip.c4 i{background:var(--emerald);box-shadow:0 0 8px var(--emerald)}
+.chip.c5 i{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+
+/* ============ CARDS ============ */
+.grid{display:grid;gap:22px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{
+  position:relative;overflow:hidden;
+  background:var(--white);
+  border:1px solid var(--line);border-radius:var(--radius);
+  padding:28px;transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .4s,box-shadow .4s;
+  box-shadow:var(--shadow-sm);
+}
+.card::after{
+  content:'';position:absolute;inset:0;border-radius:var(--radius);
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),rgba(8,145,178,.08),transparent 45%);
+  opacity:0;transition:opacity .4s;pointer-events:none;
+}
+.card:hover::after{opacity:1}
+.card:hover{transform:translateY(-6px);border-color:rgba(8,145,178,.35);
+  box-shadow:0 26px 55px -25px rgba(8,145,178,.4)}
+.card h3{font-family:'Space Grotesk',sans-serif;font-size:19px;margin-bottom:12px;display:flex;align-items:center;gap:12px;color:var(--ink);letter-spacing:-.3px}
+.card p{color:var(--muted);font-size:14.6px}
+.icon{
+  width:42px;height:42px;flex:0 0 42px;border-radius:13px;display:grid;place-items:center;font-size:19px;
+  background:linear-gradient(135deg,rgba(8,145,178,.12),rgba(124,58,237,.12));
+  border:1px solid rgba(8,145,178,.2);
+}
+.num-badge{
+  position:absolute;top:16px;right:22px;font-family:'Space Grotesk',sans-serif;
+  font-size:46px;font-weight:700;color:rgba(15,23,42,.05);line-height:1;
+}
+
+/* Highlight box */
+.highlight{
+  border-left:3px solid var(--cyan);
+  background:linear-gradient(90deg,rgba(8,145,178,.06),transparent);
+  padding:18px 22px;border-radius:0 14px 14px 0;margin-top:22px;color:var(--ink-2);font-size:14.6px;
+}
+.highlight b{color:var(--cyan)}
+
+/* ============ SVG CHART ============ */
+.chart-wrap{
+  position:relative;background:linear-gradient(160deg,#fff,var(--soft));
+  border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:var(--shadow);
+}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.axis{stroke:#94a3b8;stroke-width:1.4}
+.box-fill{fill:url(#boxGrad)}
+.pt{cursor:pointer;transition:.25s}
+.pt circle{transition:.25s}
+.pt:hover circle{filter:drop-shadow(0 0 12px currentColor)}
+.tip{
+  position:absolute;transform:translate(-50%,-115%) scale(.9);
+  background:#0a1628;color:#fff;font-size:12.5px;padding:9px 14px;border-radius:11px;
+  max-width:250px;pointer-events:none;opacity:0;transition:.25s;
+  box-shadow:0 14px 30px -12px rgba(15,23,42,.5);z-index:20;line-height:1.5;
+}
+.tip.show{opacity:1;transform:translate(-50%,-125%) scale(1)}
+.legend{display:flex;flex-wrap:wrap;gap:20px;margin-top:20px;font-size:12.8px;color:var(--muted)}
+.legend i{display:inline-block;width:22px;height:3px;border-radius:3px;margin-right:8px;vertical-align:middle}
+
+/* ============ TABS ============ */
+.tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
+.tab{
+  padding:12px 22px;border-radius:100px;border:1px solid var(--line);
+  background:var(--white);color:var(--muted);cursor:pointer;font-size:13.5px;font-weight:600;
+  transition:.3s;font-family:inherit;display:flex;align-items:center;gap:8px;
+  box-shadow:var(--shadow-sm);
+}
+.tab:hover{color:var(--ink);border-color:var(--line-2)}
+.tab.active{
+  background:linear-gradient(120deg,var(--cyan),var(--violet));color:#fff;border-color:transparent;
+  box-shadow:0 14px 30px -14px rgba(8,145,178,.6);
+}
+.tab .kode{
+  width:22px;height:22px;border-radius:7px;display:grid;place-items:center;
+  background:rgba(8,145,178,.12);font-family:'Space Grotesk';font-size:11.5px;font-weight:700;color:var(--cyan);
+}
+.tab.active .kode{background:rgba(255,255,255,.22);color:#fff}
+.tab-panel{display:none;animation:fadeUp .5s ease}
+.tab-panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ============ TIMELINE ============ */
+.timeline{position:relative;padding:20px 0}
+.timeline::before{
+  content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,var(--cyan),var(--violet),var(--pink));
+  transform:translateX(-50%);opacity:.35;
+}
+.tl-item{position:relative;display:grid;grid-template-columns:1fr 60px 1fr;gap:20px;margin-bottom:34px;align-items:center}
+.tl-item .dot{
+  width:56px;height:56px;border-radius:50%;grid-column:2;
+  background:var(--white);border:2px solid var(--line);
+  display:grid;place-items:center;z-index:2;font-family:'Space Grotesk';font-weight:700;font-size:13px;
+  box-shadow:0 0 0 6px #fff,0 12px 26px -12px rgba(15,23,42,.22);
+}
+.tl-item:nth-child(1) .dot{color:var(--cyan);border-color:var(--cyan)}
+.tl-item:nth-child(2) .dot{color:var(--violet);border-color:var(--violet)}
+.tl-item:nth-child(3) .dot{color:var(--pink);border-color:var(--pink)}
+.tl-item:nth-child(4) .dot{color:var(--emerald);border-color:var(--emerald)}
+.tl-item:nth-child(5) .dot{color:var(--amber);border-color:var(--amber)}
+.tl-card{
+  background:var(--white);border:1px solid var(--line);border-radius:18px;padding:22px;
+  box-shadow:var(--shadow-sm);transition:.35s;
+}
+.tl-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--line-2)}
+.tl-item:nth-child(odd) .tl-card{grid-column:1;text-align:right}
+.tl-item:nth-child(even) .tl-card{grid-column:3}
+.tl-item:nth-child(odd) .tl-card .year{color:var(--cyan)}
+.tl-item:nth-child(even) .tl-card .year{color:var(--violet)}
+.tl-card .year{font-family:'Space Grotesk';font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;display:block;opacity:.9}
+.tl-card h4{font-family:'Space Grotesk';font-size:17px;margin-bottom:8px;color:var(--ink)}
+.tl-card p{color:var(--muted);font-size:13.8px}
+
+/* ============ ACCORDION ============ */
+.acc{border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:14px;
+  background:var(--white);transition:.35s;box-shadow:var(--shadow-sm)}
+.acc.open{border-color:rgba(8,145,178,.4);box-shadow:0 20px 44px -26px rgba(8,145,178,.55)}
+.acc-head{
+  width:100%;background:none;border:none;color:var(--ink);cursor:pointer;font-family:inherit;
+  padding:22px 24px;display:flex;align-items:center;gap:16px;text-align:left;font-size:16px;font-weight:600;
+}
+.acc-head:hover{background:var(--soft)}
+.acc-head .idx{
+  width:36px;height:36px;flex:0 0 36px;border-radius:11px;display:grid;place-items:center;
+  background:linear-gradient(135deg,rgba(8,145,178,.14),rgba(124,58,237,.14));
+  border:1px solid rgba(8,145,178,.24);font-family:'Space Grotesk';font-size:14px;color:var(--cyan);
+}
+.acc-head .arrow{margin-left:auto;transition:.4s;color:var(--cyan);font-size:18px}
+.acc.open .acc-head .arrow{transform:rotate(180deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1)}
+.acc-body-inner{padding:0 24px 24px 76px;color:var(--muted);font-size:14.6px}
+.acc-body-inner ul{margin-top:10px;padding-left:20px}
+.acc-body-inner li{margin-bottom:8px}
+
+/* ============ LIST STYLED ============ */
+ul.styled{list-style:none;display:grid;gap:12px;margin-top:6px}
+ul.styled li{position:relative;padding-left:32px;color:var(--muted);font-size:14.6px}
+ul.styled li::before{
+  content:'';position:absolute;left:0;top:9px;width:9px;height:9px;border-radius:3px;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));box-shadow:0 0 10px rgba(8,145,178,.5);
+}
+ul.styled li b{color:var(--ink-2)}
+
+/* ============ FUTURE CARDS ============ */
+.future-card{
+  position:relative;overflow:hidden;
+  background:linear-gradient(155deg,#fff,var(--soft));
+  border:1px solid var(--line);border-radius:var(--radius);padding:26px;
+  transition:.4s;box-shadow:var(--shadow-sm);
+}
+.future-card::before{
+  content:'';position:absolute;top:-2px;left:-2px;right:-2px;height:3px;
+  background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink),var(--amber));
+  background-size:300% auto;animation:shine 6s linear infinite;
+  border-radius:var(--radius) var(--radius) 0 0;opacity:0;transition:opacity .4s;
+}
+.future-card:hover::before{opacity:1}
+.future-card:hover{transform:translateY(-6px);box-shadow:0 28px 55px -25px rgba(124,58,237,.35)}
+.future-card .fc-icon{
+  width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:24px;
+  background:linear-gradient(135deg,rgba(8,145,178,.14),rgba(124,58,237,.14));
+  border:1px solid rgba(124,58,237,.2);margin-bottom:16px;
+}
+.future-card h3{font-family:'Space Grotesk';font-size:18.5px;margin-bottom:10px;color:var(--ink);letter-spacing:-.3px}
+.future-card p{color:var(--muted);font-size:14.4px}
+.future-card .tag{
+  display:inline-block;margin-top:14px;font-size:10.5px;font-weight:700;letter-spacing:1.5px;
+  color:var(--violet);background:rgba(124,58,237,.09);
+  border:1px solid rgba(124,58,237,.22);padding:4px 11px;border-radius:100px;
+}
+
+/* ============ PUSTAKA ============ */
+.pustaka-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.pustaka-item{
+  display:flex;gap:14px;padding:18px 20px;background:var(--white);
+  border:1px solid var(--line);border-radius:14px;transition:.3s;box-shadow:var(--shadow-sm);
+}
+.pustaka-item:hover{border-color:var(--cyan);transform:translateX(5px);box-shadow:0 12px 30px -18px rgba(8,145,178,.5)}
+.pustaka-item .num{
+  width:32px;height:32px;flex:0 0 32px;border-radius:10px;display:grid;place-items:center;
+  background:linear-gradient(135deg,rgba(8,145,178,.14),rgba(124,58,237,.14));
+  color:var(--cyan);font-family:'Space Grotesk';font-size:12.5px;font-weight:700;
+}
+.pustaka-item p{font-size:13.4px;color:var(--ink-2);line-height:1.6}
+.pustaka-item p em{color:var(--muted);font-style:italic}
+
+/* ============ FOOTER ============ */
+footer{
+  border-top:1px solid var(--line);padding:60px 0 44px;text-align:center;
+  background:linear-gradient(180deg,var(--white),var(--soft));
+}
+footer p{color:var(--muted);font-size:13.4px}
+footer .brand{justify-content:center;margin-bottom:20px}
+.owner-credit{
+  display:inline-flex;align-items:center;gap:12px;margin-top:16px;
+  padding:12px 22px;border-radius:100px;background:var(--white);
+  border:1px solid var(--line);box-shadow:var(--shadow-sm);
+  font-size:13.4px;font-weight:600;color:var(--ink-2);
+}
+.owner-credit .avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  display:grid;place-items:center;color:#fff;font-family:'Space Grotesk';font-weight:700;font-size:13px;
+}
+.owner-credit b{color:var(--cyan)}
+
+/* ============ REVEAL ============ */
+.reveal{opacity:0;transform:translateY(38px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============ TO TOP ============ */
+.totop{
+  position:fixed;right:26px;bottom:26px;width:52px;height:52px;border-radius:16px;z-index:150;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));border:none;color:#fff;
+  font-size:20px;cursor:pointer;opacity:0;pointer-events:none;transition:.4s;
+  box-shadow:0 14px 30px -10px rgba(8,145,178,.6);
+}
+.totop.show{opacity:1;pointer-events:auto}
+.totop:hover{transform:translateY(-5px) scale(1.06)}
+
+/* ============ DOT NAV ============ */
+.dotnav{position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:150;display:grid;gap:14px}
+.dotnav a{width:11px;height:11px;border-radius:50%;background:var(--line-2);transition:.3s;position:relative;display:block}
+.dotnav a:hover,.dotnav a.active{background:var(--cyan);box-shadow:0 0 14px rgba(8,145,178,.7);transform:scale(1.35)}
+.dotnav a::after{
+  content:attr(data-label);position:absolute;right:22px;top:50%;transform:translateY(-50%) translateX(8px);
+  background:#0a1628;color:#fff;font-size:11.5px;
+  padding:6px 12px;border-radius:9px;white-space:nowrap;opacity:0;pointer-events:none;transition:.3s;
+}
+.dotnav a:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:1080px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-visual{max-width:440px;margin:0 auto;width:100%}
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .dotnav{display:none}
+}
+@media (max-width:860px){
+  .nav-links{
+    position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;
+    background:rgba(255,255,255,.98);backdrop-filter:blur(20px);padding:14px;gap:4px;
+    border-bottom:1px solid var(--line);display:none;
+  }
+  .nav-links.open{display:flex}
+  .burger{display:block}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  section{padding:74px 0}
+  .hero{padding-top:130px}
+  .acc-body-inner{padding-left:24px}
+  .totop{right:16px;bottom:16px}
+  .timeline::before{left:28px}
+  .tl-item{grid-template-columns:56px 1fr;gap:16px;margin-bottom:22px}
+  .tl-item .dot{grid-column:1;grid-row:1}
+  .tl-item .tl-card{grid-column:2 !important;text-align:left !important}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== BACKGROUND FX ===== -->
+<div class="bg-fx">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+  <div class="orb o4"></div>
+</div>
+<div class="grid-fx"></div>
+<div class="spotlight" id="spotlight"></div>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="logo">TI</div>
+      <div class="txt">TEKNOLOGI INFORMASI<span>Learning Hub</span></div>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#hero">Beranda</a>
+      <a href="#konsep">Konsep Dasar</a>
+      <a href="#penerapan">Penerapan</a>
+      <a href="#sistem">Sistem Komputer</a>
+      <a href="#klasifikasi">Klasifikasi</a>
+      <a href="#generasi">Generasi</a>
+      <a href="#masa-depan">Masa Depan</a>
+      <a href="#pustaka">Pustaka</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Menu">☰</button>
+  </div>
+  <div class="progress"><span id="progressBar"></span></div>
+</nav>
+
+<!-- ===== DOT NAV ===== -->
+<div class="dotnav" id="dotnav">
+  <a href="#hero" data-label="Beranda"></a>
+  <a href="#konsep" data-label="Konsep Dasar"></a>
+  <a href="#penerapan" data-label="Penerapan TI"></a>
+  <a href="#sistem" data-label="Sistem Komputer"></a>
+  <a href="#klasifikasi" data-label="Klasifikasi"></a>
+  <a href="#generasi" data-label="Generasi"></a>
+  <a href="#masa-depan" data-label="Masa Depan"></a>
+  <a href="#pustaka" data-label="Daftar Pustaka"></a>
+</div>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="owner-badge">
+          <div class="avatar">AR</div>
+          <div class="meta">
+            <span>Pemilik Web</span>
+            <small>Amaliyah Rahma Alfitri (64261736)</small>
+          </div>
+        </div>
+        <h1 class="hero-title">
+          TEKNOLOGI<br>
+          <span class="grad">INFORMASI</span><br>
+          &amp; KOMPUTER
+        </h1>
+        <p class="hero-sub">
+          Menjelajahi konsep dasar teknologi informasi, pengenalan sistem komputer,
+          klasifikasi, generasi, hingga masa depan komputer dalam satu genggaman.
+        </p>
+        <div class="hero-cta">
+          <a href="#konsep" class="btn">Mulai Menjelajah →</a>
+          <a href="#pustaka" class="btn ghost">Lihat Pustaka</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="ring r3"></div>
+        <div class="core">
+          <svg viewBox="0 0 120 120" width="62%" height="62%">
+            <defs>
+              <linearGradient id="coreG" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0891b2"/>
+                <stop offset="55%" stop-color="#7c3aed"/>
+                <stop offset="100%" stop-color="#ec4899"/>
+              </linearGradient>
+            </defs>
+            <rect x="30" y="30" width="60" height="60" rx="10" fill="url(#coreG)" opacity=".92"/>
+            <rect x="42" y="42" width="36" height="36" rx="6" fill="#fff" opacity=".28"/>
+            <g stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8">
+              <line x1="30" y1="42" x2="18" y2="42"/>
+              <line x1="30" y1="60" x2="18" y2="60"/>
+              <line x1="30" y1="78" x2="18" y2="78"/>
+              <line x1="90" y1="42" x2="102" y2="42"/>
+              <line x1="90" y1="60" x2="102" y2="60"/>
+              <line x1="90" y1="78" x2="102" y2="78"/>
+              <line x1="42" y1="30" x2="42" y2="18"/>
+              <line x1="60" y1="30" x2="60" y2="18"/>
+              <line x1="78" y1="30" x2="78" y2="18"/>
+              <line x1="42" y1="90" x2="42" y2="102"/>
+              <line x1="60" y1="90" x2="60" y2="102"/>
+              <line x1="78" y1="90" x2="78" y2="102"/>
+            </g>
+          </svg>
+        </div>
+        <div class="chip c1"><i></i>Hardware</div>
+        <div class="chip c2"><i></i>Software</div>
+        <div class="chip c3"><i></i>Data</div>
+        <div class="chip c4"><i></i>Jaringan</div>
+        <div class="chip c5"><i></i>Cloud</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 1. KONSEP DASAR ===== -->
+<section id="konsep">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">01 · Konsep Dasar</div>
+      <h2 class="sec-title">Konsep Dasar <span class="grad">Teknologi</span></h2>
+      <p class="sec-desc">Memahami hakikat teknologi dan peran penelitian di bidang Teknologi Informasi (IT).</p>
+    </div>
+
+    <div class="grid g2">
+      <div class="card reveal">
+        <span class="num-badge">A</span>
+        <h3><span class="icon">💡</span> Pengertian Teknologi</h3>
+        <p>
+          Kata <b style="color:var(--cyan)">"teknologi"</b> berasal dari bahasa Yunani:
+          <i>tecne</i> (keahlian) dan <i>logia</i> (pengetahuan). Dalam arti sempit,
+          teknologi mengacu pada objek benda yang digunakan untuk kemudahan aktivitas manusia —
+          seperti mesin, perkakas, atau perangkat keras.
+        </p>
+        <div class="highlight">
+          <b>Pandangan lain:</b> teknologi adalah pengembangan, penerapan, dan penilaian sistem-sistem,
+          teknik, dan alat bantu untuk memperbaiki serta meningkatkan proses belajar manusia.
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <span class="num-badge">B</span>
+        <h3><span class="icon">🔬</span> Penelitian Teknologi Informasi (IT)</h3>
+        <p>
+          Teknologi Informasi (TI) adalah teknologi yang digunakan untuk mengolah data —
+          termasuk memproses, mendapatkan, menyusun, menyimpan, dan memanipulasi data dalam berbagai
+          cara untuk menghasilkan informasi yang <b style="color:var(--violet)">relevan, akurat, dan tepat waktu</b>.
+        </p>
+        <p style="margin-top:12px">
+          Menurut <b>George (2010)</b>, IT mencakup semua alat yang menangkap, menyimpan, mengolah,
+          mempertukarkan, dan menggunakan informasi — termasuk perangkat keras komputer, perangkat lunak,
+          jaringan, dan basis data.
+        </p>
+      </div>
+
+      <div class="card reveal" style="grid-column:1/-1">
+        <h3><span class="icon">📐</span> Perbedaan Penelitian TI dengan Penelitian Sosial</h3>
+        <div class="grid g2" style="margin-top:8px">
+          <div>
+            <p style="font-weight:600;color:var(--ink-2);margin-bottom:10px">🔍 Karakteristik Penelitian TI:</p>
+            <ul class="styled">
+              <li>Umumnya <b>tidak memiliki metodologi yang jelas</b>.</li>
+              <li>Tidak ada pembuatan kuesioner.</li>
+              <li>Tidak ada pengolahan data.</li>
+              <li>Hanya sedikit yang mencakup analisis hasil.</li>
+            </ul>
+          </div>
+          <div>
+            <p style="font-weight:600;color:var(--ink-2);margin-bottom:10px">🎯 Cakupan Penelitian TI:</p>
+            <ul class="styled">
+              <li>Proses <b>sistematis</b> dalam mengumpulkan dan menganalisis data.</li>
+              <li>Memecahkan masalah di bidang <b>ilmu komputer</b>.</li>
+              <li>Bidang <b>teknologi informasi</b>.</li>
+              <li>Bidang <b>sistem informasi</b>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 2. PENERAPAN ===== -->
+<section id="penerapan" style="background:linear-gradient(180deg,var(--white),var(--soft))">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">02 · Aplikasi Praktis</div>
+      <h2 class="sec-title">Penerapan Teknologi Informasi <span class="grad">dalam Berbagai Bidang</span></h2>
+      <p class="sec-desc">TI telah merambah hampir seluruh sektor kehidupan manusia — dari bisnis hingga hiburan.</p>
+    </div>
+
+    <div class="grid g3">
+      <div class="card reveal">
+        <h3><span class="icon">💼</span> Bidang Bisnis</h3>
+        <p>E-Commerce, analisis data, dan <i>cloud computing</i> memungkinkan perusahaan mengoptimalkan
+          operasi dan pengambilan keputusan.</p>
+      </div>
+      <div class="card reveal">
+        <h3><span class="icon">🏭</span> Bidang Manufaktur</h3>
+        <p>Otomatisasi produksi dan <i>Internet of Things</i> (IoT) digunakan untuk memantau peralatan
+          serta meningkatkan efisiensi lini produksi.</p>
+      </div>
+      <div class="card reveal">
+        <h3><span class="icon">🏥</span> Bidang Kesehatan</h3>
+        <p>Teknologi digital merevolusi perawatan pasien, meningkatkan diagnostik, dan memungkinkan
+          layanan jarak jauh (<i>telemedicine</i>).</p>
+      </div>
+      <div class="card reveal">
+        <h3><span class="icon">🎓</span> Bidang Pendidikan</h3>
+        <p>Memfasilitasi pembelajaran personal, memperluas akses sumber daya, dan mendorong lingkungan
+          belajar kolaboratif.</p>
+      </div>
+      <div class="card reveal">
+        <h3><span class="icon">🧪</span> Bidang Sains</h3>
+        <p>Digunakan untuk simulasi dan modelisasi fenomena kompleks yang sulit diamati secara langsung.</p>
+      </div>
+      <div class="card reveal">
+        <h3><span class="icon">🎬</span> Bidang Hiburan</h3>
+        <p><i>Streaming media</i> dan konten digital menjadi tulang punggung industri hiburan modern.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3. SISTEM KOMPUTER ===== -->
+<section id="sistem">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">03 · Pengenalan</div>
+      <h2 class="sec-title">Pengenalan <span class="grad">Sistem Komputer</span></h2>
+      <p class="sec-desc">Memahami komponen dasar dan model kerja sistem komputer.</p>
+    </div>
+
+    <!-- IPO Diagram -->
+    <div class="chart-wrap reveal" style="margin-bottom:30px">
+      <svg viewBox="0 0 900 340" class="chart" role="img" aria-label="Model Input-Proses-Output">
+        <defs>
+          <linearGradient id="boxGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0891b2"/>
+            <stop offset="55%" stop-color="#7c3aed"/>
+            <stop offset="100%" stop-color="#ec4899"/>
+          </linearGradient>
+          <linearGradient id="arrowGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#0891b2"/>
+            <stop offset="100%" stop-color="#7c3aed"/>
+          </linearGradient>
+          <filter id="softShadow">
+            <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0a1628" flood-opacity=".12"/>
+          </filter>
+        </defs>
+
+        <!-- INPUT -->
+        <g filter="url(#softShadow)">
+          <rect x="60" y="70" width="180" height="200" rx="20" fill="#fff" stroke="#e2e8f0"/>
+          <rect x="60" y="70" width="180" height="46" rx="20" fill="url(#boxGrad)"/>
+          <rect x="60" y="98" width="180" height="18" fill="url(#boxGrad)"/>
+          <text x="150" y="100" fill="#fff" font-family="Space Grotesk" font-size="15" font-weight="700" text-anchor="middle" letter-spacing="2">INPUT</text>
+        </g>
+        <g transform="translate(150,180)">
+          <rect x="-40" y="-14" width="80" height="28" rx="5" fill="none" stroke="#0891b2" stroke-width="2"/>
+          <g stroke="#0891b2" stroke-width="1.6" fill="none">
+            <rect x="-32" y="-6" width="64" height="12" rx="2"/>
+            <line x1="-24" y1="12" x2="-24" y2="20"/>
+            <line x1="-8" y1="12" x2="-8" y2="20"/>
+            <line x1="8" y1="12" x2="8" y2="20"/>
+            <line x1="24" y1="12" x2="24" y2="20"/>
+          </g>
+        </g>
+        <text x="150" y="230" fill="#64748b" font-family="Inter" font-size="11.5" text-anchor="middle">Keyboard · Mouse · Scanner</text>
+        <text x="150" y="248" fill="#94a3b8" font-family="Inter" font-size="11" text-anchor="middle">Perangkat masukan data</text>
+
+        <!-- Arrow 1 -->
+        <line x1="248" y1="170" x2="316" y2="170" stroke="url(#arrowGrad)" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="316,162 328,170 316,178" fill="#7c3aed"/>
+
+        <!-- PROSES -->
+        <g filter="url(#softShadow)">
+          <rect x="336" y="70" width="228" height="200" rx="20" fill="#fff" stroke="#e2e8f0"/>
+          <rect x="336" y="70" width="228" height="46" rx="20" fill="url(#boxGrad)"/>
+          <rect x="336" y="98" width="228" height="18" fill="url(#boxGrad)"/>
+          <text x="450" y="100" fill="#fff" font-family="Space Grotesk" font-size="15" font-weight="700" text-anchor="middle" letter-spacing="2">PROSES</text>
+        </g>
+        <g transform="translate(450,180)">
+          <rect x="-46" y="-34" width="92" height="68" rx="10" fill="none" stroke="#7c3aed" stroke-width="2.2"/>
+          <rect x="-26" y="-18" width="52" height="36" rx="5" fill="#7c3aed" opacity=".18"/>
+          <text x="0" y="6" fill="#7c3aed" font-family="Space Grotesk" font-size="15" font-weight="800" text-anchor="middle">CPU</text>
+          <g stroke="#7c3aed" stroke-width="2" stroke-linecap="round">
+            <line x1="-46" y1="-22" x2="-56" y2="-22"/>
+            <line x1="-46" y1="0" x2="-56" y2="0"/>
+            <line x1="-46" y1="22" x2="-56" y2="22"/>
+            <line x1="46" y1="-22" x2="56" y2="-22"/>
+            <line x1="46" y1="0" x2="56" y2="0"/>
+            <line x1="46" y1="22" x2="56" y2="22"/>
+            <line x1="-20" y1="-34" x2="-20" y2="-44"/>
+            <line x1="0" y1="-34" x2="0" y2="-44"/>
+            <line x1="20" y1="-34" x2="20" y2="-44"/>
+            <line x1="-20" y1="34" x2="-20" y2="44"/>
+            <line x1="0" y1="34" x2="0" y2="44"/>
+            <line x1="20" y1="34" x2="20" y2="44"/>
+          </g>
+        </g>
+        <text x="450" y="230" fill="#64748b" font-family="Inter" font-size="11.5" text-anchor="middle">CPU · Memori · ALU</text>
+        <text x="450" y="248" fill="#94a3b8" font-family="Inter" font-size="11" text-anchor="middle">Pengolahan &amp; komputasi data</text>
+
+        <!-- Arrow 2 -->
+        <line x1="572" y1="170" x2="640" y2="170" stroke="url(#arrowGrad)" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="640,162 652,170 640,178" fill="#7c3aed"/>
+
+        <!-- OUTPUT -->
+        <g filter="url(#softShadow)">
+          <rect x="660" y="70" width="180" height="200" rx="20" fill="#fff" stroke="#e2e8f0"/>
+          <rect x="660" y="70" width="180" height="46" rx="20" fill="url(#boxGrad)"/>
+          <rect x="660" y="98" width="180" height="18" fill="url(#boxGrad)"/>
+          <text x="750" y="100" fill="#fff" font-family="Space Grotesk" font-size="15" font-weight="700" text-anchor="middle" letter-spacing="2">OUTPUT</text>
+        </g>
+        <g transform="translate(750,180)">
+          <rect x="-46" y="-32" width="92" height="60" rx="5" fill="none" stroke="#ec4899" stroke-width="2"/>
+          <rect x="-40" y="-26" width="80" height="48" rx="3" fill="#ec4899" opacity=".15"/>
+          <line x1="-18" y1="36" x2="18" y2="36" stroke="#ec4899" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="-6" y="28" width="12" height="8" fill="none" stroke="#ec4899" stroke-width="2"/>
+        </g>
+        <text x="750" y="230" fill="#64748b" font-family="Inter" font-size="11.5" text-anchor="middle">Monitor · Printer · Speaker</text>
+        <text x="750" y="248" fill="#94a3b8" font-family="Inter" font-size="11" text-anchor="middle">Hasil informasi bagi pengguna</text>
+      </svg>
+
+      <div class="legend">
+        <span><i style="background:#0891b2"></i>Input — data mentah dimasukkan</span>
+        <span><i style="background:#7c3aed"></i>Proses — CPU mengolah data</span>
+        <span><i style="background:#ec4899"></i>Output — informasi ditampilkan</span>
+      </div>
+    </div>
+
+    <!-- Komponen & penjelasan -->
+    <div class="grid g2">
+      <div class="card reveal">
+        <h3><span class="icon">🧩</span> Empat Komponen Utama</h3>
+        <ul class="styled">
+          <li><b>Perangkat Keras (Hardware)</b> — komponen fisik komputer.</li>
+          <li><b>Perangkat Lunak (Software)</b> — program &amp; instruksi.</li>
+          <li><b>Data</b> — bahan mentah yang diolah menjadi informasi.</li>
+          <li><b>Komponen Komunikasi</b> — penghubung antar sistem.</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <h3><span class="icon">📚</span> Penjelasan Sistem</h3>
+        <p>Sistem komputer pada dasarnya terdiri dari <b style="color:var(--cyan)">Central Processing Unit (CPU)</b>,
+          <b style="color:var(--violet)">memori</b>, dan <b style="color:var(--pink)">peralatan input/output</b>.</p>
+        <p style="margin-top:12px">CPU adalah tempat berlangsungnya semua proses, memori menyimpan program dan
+          data sewaktu diproses, sedangkan peralatan I/O bisa berupa keyboard, monitor, serta penyimpanan
+          seperti disket atau tape.</p>
+        <div class="highlight">
+          Aktivitas komputer dicirikan oleh model <b>input-proses-output (IPO)</b>: program menerima input,
+          melakukan pemrosesan, dan menghasilkan output.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4. KLASIFIKASI ===== -->
+<section id="klasifikasi" style="background:linear-gradient(180deg,var(--soft),var(--white))">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">04 · Penggolongan</div>
+      <h2 class="sec-title">Klasifikasi <span class="grad">Komputer</span></h2>
+      <p class="sec-desc">Komputer dapat diklasifikasikan berdasarkan tiga sudut pandang utama.</p>
+    </div>
+
+    <div class="tabs reveal" id="klasTabs">
+      <button class="tab active" data-target="klas-a"><span class="kode">A</span> Berdasarkan Jenis Data yang Diolah</button>
+      <button class="tab" data-target="klas-b"><span class="kode">B</span> Berdasarkan Bidang Masalah / Kegunaan</button>
+      <button class="tab" data-target="klas-c"><span class="kode">C</span> Berdasarkan Kemampuan &amp; Ukuran</button>
+    </div>
+
+    <!-- Panel A -->
+    <div class="tab-panel active" id="klas-a">
+      <div class="grid g3">
+        <div class="card">
+          <span class="num-badge">A1</span>
+          <h3><span class="icon">📈</span> Komputer Analog</h3>
+          <p>Mengolah <b style="color:var(--cyan)">data kualitatif</b>, bekerja secara kontinu dan paralel,
+            biasanya tidak memerlukan bahasa perantara.</p>
+          <div class="highlight">
+            <b>Contoh:</b> pengukur suhu, kecepatan suara, tegangan listrik.
+          </div>
+        </div>
+        <div class="card">
+          <span class="num-badge">A2</span>
+          <h3><span class="icon">🔢</span> Komputer Digital</h3>
+          <p>Mengolah <b style="color:var(--violet)">data kuantitatif</b> (huruf, angka, kombinasi keduanya,
+            karakter khusus), biasanya memerlukan bahasa perantara.</p>
+          <div class="highlight"><b>Contoh:</b> Personal Computer (PC).</div>
+        </div>
+        <div class="card">
+          <span class="num-badge">A3</span>
+          <h3><span class="icon">🔀</span> Komputer Hybrid</h3>
+          <p>Kombinasi antara <b style="color:var(--pink)">komputer analog dan digital</b> —
+            menggabungkan keunggulan pengolahan kontinu dan diskrit.</p>
+          <div class="highlight"><b>Contoh:</b> faksimile.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel B -->
+    <div class="tab-panel" id="klas-b">
+      <div class="grid g2">
+        <div class="card">
+          <span class="num-badge">B1</span>
+          <h3><span class="icon">🌐</span> General Purpose Computer</h3>
+          <p>Dirancang <b style="color:var(--cyan)">fleksibel untuk berbagai jenis fungsi</b> dan dapat
+            digunakan untuk berbagai keperluan.</p>
+          <div class="highlight"><b>Contoh:</b> PC, laptop.</div>
+        </div>
+        <div class="card">
+          <span class="num-badge">B2</span>
+          <h3><span class="icon">🎯</span> Special Purpose Computer</h3>
+          <p>Dirancang untuk menyelesaikan <b style="color:var(--violet)">kelas masalah yang terbatas</b>,
+            biasanya untuk tugas khusus dengan efisiensi tinggi.</p>
+          <div class="highlight"><b>Contoh:</b> komputer navigasi, pelacak pesawat atau rudal.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Panel C -->
+    <div class="tab-panel" id="klas-c">
+      <div class="grid g3">
+        <div class="card">
+          <span class="num-badge">C1</span>
+          <h3><span class="icon">🚀</span> Superkomputer</h3>
+          <p>Komputer <b>tercepat dan paling mahal</b>, digunakan untuk aplikasi khusus yang membutuhkan
+            perhitungan matematis masif.</p>
+          <p style="margin-top:10px;font-size:13.5px"><b>Contoh penggunaan:</b> prakiraan cuaca, simulasi ilmiah, desain elektronik.</p>
+        </div>
+        <div class="card">
+          <span class="num-badge">C2</span>
+          <h3><span class="icon">🏢</span> Mainframe</h3>
+          <p>Komputer <b>besar dan mahal</b> yang mampu mendukung <b>ratusan hingga ribuan pengguna</b>
+            secara simultan.</p>
+          <p style="margin-top:10px;font-size:13.5px">Biasanya dipakai di perbankan, pemerintahan, dan perusahaan besar.</p>
+        </div>
+        <div class="card">
+          <span class="num-badge">C3</span>
+          <h3><span class="icon">💻</span> Minikomputer</h3>
+          <p>Komputer <b>multi-pengguna</b> yang mampu mendukung hingga <b>ratusan pengguna</b> secara simultan.</p>
+          <p style="margin-top:10px;font-size:13.5px">Menjadi jembatan antara mainframe dan PC modern.</p>
+        </div>
+        <div class="card">
+          <span class="num-badge">C4</span>
+          <h3><span class="icon">🖥️</span> Workstation</h3>
+          <p>Komputer <b>single-user</b> yang powerful dengan mikroprosesor lebih kuat dan monitor
+            berkualitas tinggi.</p>
+          <p style="margin-top:10px;font-size:13.5px">Cocok untuk desain grafis, CAD, dan komputasi teknik.</p>
+        </div>
+        <div class="card">
+          <span class="num-badge">C5</span>
+          <h3><span class="icon">🧑‍💻</span> Personal Computer (PC)</h3>
+          <p>Komputer <b>kecil single-user</b> berbasis mikroprosesor — yang paling banyak digunakan
+            sehari-hari.</p>
+          <p style="margin-top:10px;font-size:13.5px">Termasuk desktop, laptop, dan all-in-one.</p>
+        </div>
+        <div class="card" style="background:linear-gradient(155deg,#fff,var(--soft))">
+          <h3><span class="icon">📊</span> Spektrum Daya Komputasi</h3>
+          <svg viewBox="0 0 220 60" style="width:100%;height:auto;margin-top:8px">
+            <defs>
+              <linearGradient id="specGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#0891b2"/>
+                <stop offset="50%" stop-color="#7c3aed"/>
+                <stop offset="100%" stop-color="#ec4899"/>
+              </linearGradient>
+            </defs>
+            <line x1="10" y1="30" x2="210" y2="30" stroke="url(#specGrad)" stroke-width="6" stroke-linecap="round" opacity=".35"/>
+            <circle cx="10" cy="30" r="6" fill="#0891b2"/>
+            <circle cx="60" cy="30" r="6" fill="#22d3ee"/>
+            <circle cx="110" cy="30" r="6" fill="#7c3aed"/>
+            <circle cx="160" cy="30" r="6" fill="#a78bfa"/>
+            <circle cx="210" cy="30" r="6" fill="#ec4899"/>
+            <text x="10" y="50" font-family="Inter" font-size="9" fill="#64748b" text-anchor="middle">PC</text>
+            <text x="60" y="50" font-family="Inter" font-size="9" fill="#64748b" text-anchor="middle">WS</text>
+            <text x="110" y="50" font-family="Inter" font-size="9" fill="#64748b" text-anchor="middle">Mini</text>
+            <text x="160" y="50" font-family="Inter" font-size="9" fill="#64748b" text-anchor="middle">Frame</text>
+            <text x="210" y="50" font-family="Inter" font-size="9" fill="#64748b" text-anchor="middle">Super</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 5. GENERASI KOMPUTER ===== -->
+<section id="generasi">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">05 · Evolusi</div>
+      <h2 class="sec-title">Generasi <span class="grad">Komputer</span></h2>
+      <p class="sec-desc">Perjalanan panjang komputasi dari tabung vakum hingga kecerdasan buatan.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-card">
+          <span class="year">Gen I · 1940 – 1956</span>
+          <h4>Tabung Vakum</h4>
+          <p>Menggunakan <b>tabung vakum</b> sebagai komponen utama. Contoh paling terkenal adalah
+            <b>ENIAC (1946)</b> — komputer pertama untuk tujuan umum. Ukurannya memakan satu ruangan penuh.</p>
+        </div>
+        <div class="dot">I</div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-card">
+          <span class="year">Gen II · 1956 – 1963</span>
+          <h4>Transistor</h4>
+          <p>Menggunakan <b>transistor</b> menggantikan tabung vakum. <b>UNIVAC</b> diperkenalkan untuk
+            penggunaan komersial, dan IBM merilis IBM 650 serta IBM 700. Bahasa pemrograman mulai dikembangkan.</p>
+        </div>
+        <div class="dot">II</div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-card">
+          <span class="year">Gen III · 1964 – 1971</span>
+          <h4>Sirkuit Terpadu (IC)</h4>
+          <p>Menggunakan <b>sirkuit terpadu (IC)</b>. Komputer mini menjadi inovasi signifikan pada era ini,
+            dan NASA menggunakan komputer generasi ini untuk misi antariksa.</p>
+        </div>
+        <div class="dot">III</div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-card">
+          <span class="year">Gen IV · 1971 – Sekarang</span>
+          <h4>Mikroprosesor</h4>
+          <p>Ditandai dengan <b>mikroprosesor</b> dan integrasi berskala besar <b>(LSI/VLSI)</b>.
+            Kemampuan komputasi meledak, ukuran mengecil, harga terjangkau.</p>
+        </div>
+        <div class="dot">IV</div>
+      </div>
+
+      <div class="tl-item reveal">
+        <div class="tl-card">
+          <span class="year">Gen V · Sedang Berkembang</span>
+          <h4>AI &amp; Paralel Processing</h4>
+          <p>Berfokus pada <b>paralel processing</b>, <b>kecerdasan buatan</b>, dan <b>antarmuka bahasa alami</b>.
+            Proyek ini dipelopori oleh Jepang melalui MITI pada awal 1980-an.</p>
+        </div>
+        <div class="dot">V</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6. MASA DEPAN ===== -->
+<section id="masa-depan" style="background:linear-gradient(180deg,var(--white),var(--soft))">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">06 · Visioner</div>
+      <h2 class="sec-title">Masa Depan <span class="grad">Komputer</span></h2>
+      <p class="sec-desc">Ekosistem komputasi saat ini sedang mengalami perubahan mendasar menuju era baru.</p>
+    </div>
+
+    <div class="grid g3">
+      <div class="future-card reveal">
+        <div class="fc-icon">🤖</div>
+        <h3>Kecerdasan Buatan (AI)</h3>
+        <p>AI telah bertransformasi dari alat potensial menjadi <b>akselerator bisnis</b>, menggerakkan
+          berbagai aspek dari operasi otonom hingga analisis prediktif. AI juga berperan sebagai
+          "konduktor" yang mengoordinasikan komputasi, optimasi algoritma kuantum, dan desain semikonduktor.</p>
+        <span class="tag">TRANSFORMASI</span>
+      </div>
+
+      <div class="future-card reveal">
+        <div class="fc-icon">⚛️</div>
+        <h3>Komputasi Kuantum</h3>
+        <p>IBM, Google, dan IonQ terus membuat kemajuan. <b>IonQ mengumumkan fidelitas gerbang dua-qubit 99,99%</b>,
+          dan IBM berencana mengirimkan komputer kuantum yang toleran terhadap kesalahan pada <b>2030</b>.</p>
+        <span class="tag">KUANTUM</span>
+      </div>
+
+      <div class="future-card reveal">
+        <div class="fc-icon">⚡</div>
+        <h3>Superkomputer</h3>
+        <p>Tetap berada di puncak piramida daya komputasi. Superkomputer <b>"Ling Sheng"</b> dari Tiongkok
+          memecahkan rekor dengan sekitar <b>21,9 miliar miliar operasi floating-point per detik</b>.</p>
+        <span class="tag">HIGH PERFORMANCE</span>
+      </div>
+
+      <div class="future-card reveal">
+        <div class="fc-icon">🧬</div>
+        <h3>Biokomputasi (DNA Computing)</h3>
+        <p>Menggunakan proses seluler, DNA, dan RNA untuk pemrosesan paralel dan penyimpanan informasi.
+          Kepadatan penyimpanan DNA dapat mencapai <b>1 exabyte per milimeter kubik</b>.</p>
+        <span class="tag">BIO-TECH</span>
+      </div>
+
+      <div class="future-card reveal">
+        <div class="fc-icon">🧠</div>
+        <h3>Komputasi Neuromorfik</h3>
+        <p>Meniru mekanisme otak manusia untuk mewujudkan <b>kecerdasan tepi</b> (<i>edge intelligence</i>) —
+          memungkinkan AI berjalan efisien pada perangkat dengan daya rendah.</p>
+        <span class="tag">NEUROMORPHIC</span>
+      </div>
+
+      <div class="future-card reveal">
+        <div class="fc-icon">🔮</div>
+        <h3>Ekosistem Masa Depan</h3>
+        <p>Integrasi antara AI, komputasi kuantum, dan biokomputasi diprediksi menjadi fondasi ekosistem
+          komputasi <b>pasca-silikon</b> dalam beberapa dekade mendatang.</p>
+        <span class="tag">HORIZON 2030+</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DAFTAR PUSTAKA ===== -->
+<section id="pustaka">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="kicker">07 · Referensi</div>
+      <h2 class="sec-title">Daftar <span class="grad">Pustaka</span></h2>
+      <p class="sec-desc">Sumber-sumber yang digunakan dalam penyusunan materi pembelajaran ini.</p>
+    </div>
+
+    <div class="pustaka-grid">
+      <div class="pustaka-item reveal">
+        <div class="num">01</div>
+        <p>Febrian, Jack. (2006). <em>Pengetahuan Teknologi Informasi.</em> eprints2.undip.ac.id.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">02</div>
+        <p>George. (2010). <em>Information Technology.</em> repository.untag-sby.ac.id.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">03</div>
+        <p>Nasution. (2012). <em>Teknologi Pembelajaran.</em> repository.untag-sby.ac.id.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">04</div>
+        <p>Rusman. (2013). <em>Teknologi Pendidikan.</em> repository.untag-sby.ac.id.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">05</div>
+        <p>Supriyanto. (2005). <em>Teknologi Informasi.</em> eprints2.undip.ac.id.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">06</div>
+        <p>Sutabri. (2014). <em>Pengantar Teknologi Informasi.</em> repository.untag-sby.ac.id.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">07</div>
+        <p>Thompson. (1991). <em>Teori Perkembangan Teknologi Informasi.</em> eprints2.undip.ac.id.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">08</div>
+        <p><em>Computers Types.</em> Carnegie Mellon University. cs.cmu.edu.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">09</div>
+        <p><em>Sistem Komputer.</em> LMS-SPADA Indonesia. lmsspada.kemdiktisaintek.go.id.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">10</div>
+        <p><em>Sejarah Komputer.</em> LMS-SPADA Indonesia. lmsspada.kemdiktisaintek.go.id.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">11</div>
+        <p><em>Fifth Generation Computers.</em> ScienceDirect.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">12</div>
+        <p><em>科技创新世界潮丨计算生态系统正经历深刻变革.</em> 科技日报, 2026.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">13</div>
+        <p><em>Penelitian Teknologi Informasi (TI).</em> yudiagusta.wordpress.com.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">14</div>
+        <p><em>Interdisciplinary Studies on Digital Transformation and Innovation.</em> Duke University Library.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">15</div>
+        <p><em>Pendahuluan Perkuliahan.</em> LMS-SPADA Kemdiktisaintek.</p>
+      </div>
+      <div class="pustaka-item reveal">
+        <div class="num">16</div>
+        <p><em>Purpose Computing System.</em> ScienceDirect.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container">
+    <div class="brand">
+      <div class="logo">TI</div>
+      <div class="txt">TEKNOLOGI INFORMASI<span>Learning Hub</span></div>
+    </div>
+    <p>Materi Teknologi Informasi &amp; Sistem Komputer — Konsep, Klasifikasi, dan Masa Depan</p>
+    <div class="owner-credit">
+      <div class="avatar">AR</div>
+      <span>Pemilik Web · <b>Amaliyah Rahma Alfitri (64261736)</b></span>
+    </div>
+    <p style="margin-top:22px;opacity:.65;font-size:12.5px">© 2026 · Dibuat untuk keperluan pembelajaran</p>
+  </div>
+</footer>
+
+<button class="totop" id="toTop" aria-label="Kembali ke atas">↑</button>
+
+<script>
+/* ============ PROGRESS + BACK TO TOP ============ */
+const progressBar = document.getElementById('progressBar');
+const toTop = document.getElementById('toTop');
+const dotLinks = document.querySelectorAll('.dotnav a');
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('section, header.hero');
+
+function onScroll(){
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const p = h > 0 ? (window.scrollY / h) * 100 : 0;
+  progressBar.style.width = p + '%';
+  toTop.classList.toggle('show', window.scrollY > 500);
+  highlightNav();
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+/* ============ ACTIVE NAV ============ */
+function highlightNav(){
+  let current = '';
+  sections.forEach(sec=>{
+    const top = sec.offsetTop - 150;
+    if(window.scrollY >= top) current = sec.id;
+  });
+  navLinks.forEach(a=>{
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+  dotLinks.forEach(a=>{
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}
+
+/* ============ BURGER MENU ============ */
+const burger = document.getElementById('burger');
+const navLinksEl = document.getElementById('navLinks');
+burger.addEventListener('click', ()=> navLinksEl.classList.toggle('open'));
+navLinksEl.addEventListener('click', e=>{
+  if(e.target.tagName === 'A') navLinksEl.classList.remove('open');
+});
+
+/* ============ BACK TO TOP ============ */
+toTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+/* ============ REVEAL ON SCROLL ============ */
+const revealObs = new IntersectionObserver((entries)=>{
+  entries.forEach((en, i)=>{
+    if(en.isIntersecting){
+      setTimeout(()=> en.target.classList.add('in'), i * 70);
+      revealObs.unobserve(en.target);
+    }
+  });
+},{threshold:.12, rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.reveal').forEach(el=> revealObs.observe(el));
+
+/* ============ TABS ============ */
+function initTabs(containerId){
+  const wrap = document.getElementById(containerId);
+  if(!wrap) return;
+  wrap.querySelectorAll('.tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      wrap.querySelectorAll('.tab').forEach(t=> t.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.dataset.target;
+      const panels = wrap.parentElement.querySelectorAll('.tab-panel');
+      panels.forEach(p=> p.classList.toggle('active', p.id === target));
+    });
+  });
+}
+initTabs('klasTabs');
+
+/* ============ ACCORDION ============ */
+document.querySelectorAll('.acc').forEach(acc=>{
+  const head = acc.querySelector('.acc-head');
+  const body = acc.querySelector('.acc-body');
+  head.addEventListener('click', ()=>{
+    const isOpen = acc.classList.contains('open');
+    document.querySelectorAll('.acc').forEach(a=>{
+      a.classList.remove('open');
+      a.querySelector('.acc-body').style.maxHeight = null;
+    });
+    if(!isOpen){
+      acc.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  });
+});
+
+/* ============ CARD SPOTLIGHT ============ */
+document.querySelectorAll('.card, .future-card').forEach(card=>{
+  card.addEventListener('mousemove', e=>{
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
+});
+
+/* ============ MOUSE SPOTLIGHT ============ */
+const spot = document.getElementById('spotlight');
+let spotActive = false;
+window.addEventListener('mousemove', e=>{
+  spot.style.left = e.clientX + 'px';
+  spot.style.top  = e.clientY + 'px';
+  if(!spotActive){ spot.style.opacity = '1'; spotActive = true; }
+});
+window.addEventListener('mouseleave', ()=> { spot.style.opacity = '0'; spotActive = false; });
+</script>
+</body>
+</html>
